@@ -1,4 +1,4 @@
-package frc.team6500.subsystems;
+package frc.team6500.args;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -66,5 +66,4 @@ public class SwerveArgs {
 
     public int kDrivingMotorCurrentLimit = 40; // amps
     public int kTurningMotorCurrentLimit = 20; // amps
-
 }
