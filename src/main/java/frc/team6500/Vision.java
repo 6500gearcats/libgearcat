@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.team6500.args.DriveArgs;
 
 public class Vision {
@@ -29,6 +30,8 @@ public class Vision {
     // Simulation
     private PhotonCameraSim cameraSim;
     private VisionSystemSim visionSim;
+
+    private DriveArgs driveArgs;
 
 
     public class VisionConstants {
@@ -60,7 +63,9 @@ public class Vision {
 
   }
 
-    public Vision(PhotonCamera camera, DriveArgs args) {
+    public Vision(PhotonCamera camera, DriveArgs driveArgs) {
+        this.driveArgs = driveArgs;
+
         m_camera = camera;
 
         photonEstimator = new PhotonPoseEstimator(
@@ -68,7 +73,7 @@ public class Vision {
         photonEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
 
         // ----- Simulation
-        if (args.simulation) {
+        if (driveArgs.simulation) {
             // Create the vision system simulation which handles cameras and targets on the
             // field.
             visionSim = new VisionSystemSim("main");
@@ -94,7 +99,14 @@ public class Vision {
         }
     }
 
+    //TODO: Properly Implement simulation, and ask Bennet if this is correct
     public void simulationPeriodic(Pose2d pose) {
             
+    }
+
+    public Field2d getSimDebugField() {
+        if (!driveArgs.simulation)
+            return null;
+        return visionSim.getDebugField();
     }
 }

@@ -511,7 +511,7 @@ publisher = NetworkTableInstance.getDefault()
   }
 
   // PID Controllers
-  public static PIDController turnController = new PIDController(Constants.ANGULAR_P, 0, Constants.ANGULAR_D);
+  public static PIDController turnController = new PIDController(DriveArgs.ANGULAR_P, 0, DriveArgs.ANGULAR_D);
 
   public void setDriveCoast() {
     m_frontLeft.setCoast();
