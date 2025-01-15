@@ -58,24 +58,19 @@ public class MAXSwerveModule {
     drivingConfig.closedLoop
         .pid(args.kDrivingP, args.kDrivingI, args.kDrivingD)
         .velocityFF(args.kDrivingFF)
-        .outputRange(args.kDrivingMinOutput, args.kDrivingMaxOutput)
+        .outputRange(args.kDrivingMinOutput, args.kDrivingMaxOutput);
         // Enable PID wrap around for the turning motor. This will allow the PID
         // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
         // to 10 degrees will go through 0 rather than the other direction which is a
         // longer route.
 
-        .positionWrappingEnabled(true)
-        .positionWrappingMinInput(args.kTurningEncoderPositionPIDMinInput)
-        .positionWrappingMaxInput(args.kTurningEncoderPositionPIDMaxInput);
-    
+        
     drivingConfig.smartCurrentLimit(args.kDrivingMotorCurrentLimit);
 
     drivingConfig.signals.primaryEncoderPositionPeriodMs(5);
     drivingConfig.idleMode(args.kDrivingMotorIdleMode);
 
-    m_drivingSparkMax.configure(drivingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-    turningConfig.encoder
+    turningConfig.absoluteEncoder
         // Apply position and velocity conversion factors for the turning encoder. We
         // want these in radians and radians per second to use with WPILib's swerve
         // APIs.
@@ -92,16 +87,18 @@ public class MAXSwerveModule {
         // Set the PID gains for the turning motor. Note these are example gains, and
         // you
         // may need to tune them for your own robot!
-        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+        .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
         .pid(args.kTurningP, args.kTurningI, args.kTurningD)
         .velocityFF(args.kTurningFF)
-        .outputRange(args.kTurningMinOutput, args.kTurningMaxOutput);
+        .outputRange(args.kTurningMinOutput, args.kTurningMaxOutput)
+        
+        .positionWrappingEnabled(true)
+        .positionWrappingMinInput(args.kTurningEncoderPositionPIDMinInput)
+        .positionWrappingMaxInput(args.kTurningEncoderPositionPIDMaxInput);
 
     turningConfig.smartCurrentLimit(args.kTurningMotorCurrentLimit);
 
     turningConfig.signals.primaryEncoderPositionPeriodMs(5);
-
-    m_turningSparkMax.configure(turningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // Factory reset, so we get the SPARKS MAX to a known state before configuring
     // them. This is useful in case a SPARK MAX is swapped out.
