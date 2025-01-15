@@ -51,10 +51,7 @@ public class Neck extends SubsystemBase {
   }
 
   public double getAngle() {
-    double angle = neckEncoder.getPosition();
-    if(angle < 0.9) {
-        angle = 0;
-    }
+    double angle = neckEncoder.getPosition() * args.kRatio;
     return angle;
   }
 
@@ -86,6 +83,7 @@ public class Neck extends SubsystemBase {
       SmartDashboard.putString("Neck Status", "Stablizing");
     }
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

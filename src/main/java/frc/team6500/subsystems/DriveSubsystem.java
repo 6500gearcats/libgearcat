@@ -508,8 +508,10 @@ publisher = NetworkTableInstance.getDefault()
     return m_fieldOriented;
   }
 
-  // PID Controllers
-  public static PIDController turnController = new PIDController(DriveArgs.ANGULAR_P, 0, DriveArgs.ANGULAR_D);
+  public void toggleTurbo() {
+    turboEnable = !turboEnable;
+  }
+ 
 
   public void setDriveCoast() {
     m_frontLeft.setCoast();
