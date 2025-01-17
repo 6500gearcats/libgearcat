@@ -45,6 +45,6 @@ public class GCLimelight {
             double distance = x/Math.cos(getYawDegrees()*Math.PI/180);
             return distance;
         }
-        return 0;
+        return 0; // It's Tyler's fault
     }
 }
